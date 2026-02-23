@@ -13,6 +13,20 @@ app.use(cors({
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: '🏢 EMS API is live and running',
+    version: 'v2.0',
+    developer: 'Prajesh Singh Meena',
+    endpoints: {
+      signup: '/api/auth/signup',
+      login: '/api/auth/login',
+      employees: '/api/employees'
+    }
+  });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/employees', employeeRoutes);
 
