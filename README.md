@@ -2,6 +2,15 @@
 
 A full-stack, multi-tenant Employee Management System built with **Node.js**, **Express**, **MongoDB Atlas**, and a **Vanilla JS frontend** with a futuristic dark gold UI.
 
+## 🌐 Live Links
+
+| Service | URL |
+|---|---|
+| 🖥️ Frontend | https://ems-frontend-6z6e.onrender.com |
+| ⚙️ Backend API | https://employee-management-system-p2iq.onrender.com |
+
+> ⚠️ Note: Render free tier sleeps after 15 minutes of inactivity. First request may take 30-60 seconds to wake up. This is normal.
+
 ---
 
 ## 📸 Features
@@ -65,6 +74,7 @@ Employee Management System/
 | Fonts | Syne, DM Sans, JetBrains Mono |
 | Icons | Font Awesome 6 |
 | Architecture | MVC (Model-View-Controller) |
+| Deployment | Render (Backend + Frontend) |
 
 ---
 
@@ -78,8 +88,8 @@ Employee Management System/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/employee-management-system.git
-cd employee-management-system
+git clone https://github.com/prajeshmeena69/Employee-Management-System.git
+cd Employee-Management-System
 ```
 
 ### 2. Setup Backend
@@ -96,7 +106,7 @@ Create a `.env` file inside the `backend` folder:
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_atlas_connection_string
-JWT_SECRET=ems_super_secret_key_2026
+JWT_SECRET=your_jwt_secret_key
 ```
 
 ### 4. Start Backend Server
@@ -177,14 +187,16 @@ Authorization: Bearer <token>
 - Type: Web Service
 - Root Directory: `backend`
 - Build Command: `npm install`
-- Start Command: `node server.js`
-- Environment Variables: `PORT`, `MONGO_URI`, `JWT_SECRET`
+- Start Command: `npm start`
+- Environment Variables: `PORT`, `MONGO_URI`, `JWT_SECRET`, `NODE_ENV`
+- Live URL: https://employee-management-system-p2iq.onrender.com
 
 ### Frontend
 - Platform: [Render](https://render.com)
 - Type: Static Site
 - Root Directory: `frontend`
 - Publish Directory: `.`
+- Live URL: https://ems-frontend-6z6e.onrender.com
 
 ---
 
@@ -201,7 +213,7 @@ Authorization: Bearer <token>
 
 ## 👨‍💻 Developed By
 
-**Prajesh**
+**Prajesh Singh Meena**
 KIET Academic Projects — 4th Semester
 AI Driven Full Stack Development
 
