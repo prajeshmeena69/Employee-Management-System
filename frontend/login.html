@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EMS — Sign In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:    #030305;
+      --card:     #0d0d18;
+      --hover:    #14141f;
+      --gold:     #c8a951;
+      --gold2:    #e2c06a;
+      --goldDim:  rgba(200,169,81,0.10);
+      --goldBorder: rgba(200,169,81,0.18);
+      --goldGlow: rgba(200,169,81,0.25);
+      --border:   rgba(255,255,255,0.06);
+      --text:     #e4e4f0;
+      --muted:    #5a5a72;
+      --textSub:  #a0a0b8;
+      --danger:   #f0506e;
+      --success:  #2dd4a0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,81,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,81,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(200,169,81,0.07), transparent 70%);
+      top: -150px; right: -150px;
+    }
+
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,212,255,0.04), transparent 70%);
+      bottom: -100px; left: -100px;
+    }
+
+    .auth-layout {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* LEFT — FORM */
+    .auth-left {
+      width: 520px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: rgba(13,13,24,0.8);
+      border-right: 1px solid var(--goldBorder);
+    }
+
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 48px;
+      text-decoration: none;
+    }
+
+    .auth-brand-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--goldDim);
+      border: 1px solid var(--goldBorder);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .auth-brand-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold);
+    }
+
+    .form-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .form-heading h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .form-heading p {
+      font-size: 0.855rem;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    .form-heading p a {
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .form-heading p a:hover { text-decoration: underline; }
+
+    .field { margin-bottom: 18px; }
+
+    .field label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .field-input-wrap { position: relative; }
+
+    .field-input-wrap i.icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.85rem;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+
+    .field-input-wrap:focus-within i.icon { color: var(--gold); }
+
+    .field input {
+      width: 100%;
+      background: var(--hover);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px 12px 40px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .field input:focus {
+      border-color: var(--goldBorder);
+      background: #11111e;
+      box-shadow: 0 0 0 3px rgba(200,169,81,0.06);
+    }
+
+    .field input::placeholder { color: var(--muted); }
+
+    .toggle-pass {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: color 0.2s;
+    }
+
+    .toggle-pass:hover { color: var(--gold); }
+
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #a07830, var(--gold), var(--gold2));
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.4s;
+    }
+
+    .btn-submit:hover::before { left: 100%; }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px var(--goldGlow);
+    }
+
+    .auth-message {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
+      display: none;
+    }
+
+    .auth-message.error {
+      display: block;
+      background: rgba(240,80,110,0.08);
+      color: var(--danger);
+      border: 1px solid rgba(240,80,110,0.2);
+    }
+
+    .auth-message.success {
+      display: block;
+      background: rgba(45,212,160,0.08);
+      color: var(--success);
+      border: 1px solid rgba(45,212,160,0.2);
+    }
+
+    /* RIGHT PANEL */
+    .auth-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+      background: rgba(7,7,15,0.5);
+    }
+
+    .auth-right-inner { max-width: 420px; width: 100%; }
+
+    .auth-right-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .auth-right-title span {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .auth-right-sub {
+      font-size: 0.95rem;
+      color: var(--textSub);
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 40px;
+    }
+
+    .auth-info-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .auth-info-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: rgba(13,13,24,0.6);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .auth-info-card:hover { border-color: var(--goldBorder); }
+
+    .auth-info-card i {
+      color: var(--gold);
+      font-size: 0.9rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .auth-info-card span {
+      font-size: 0.845rem;
+      color: var(--textSub);
+    }
+
+    .auth-info-card strong { color: var(--text); font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="auth-layout">
+
+    <!-- LEFT — FORM -->
+    <div class="auth-left">
+      <a href="home.html" class="auth-brand">
+        <div class="auth-brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <span class="auth-brand-text">EMS PORTAL</span>
+      </a>
+
+      <div class="form-heading">
+        <div class="form-eyebrow">Welcome Back</div>
+        <h1>Sign In</h1>
+        <p>No account yet? <a href="signup.html">Create one free →</a></p>
+      </div>
+
+      <div class="field">
+        <label>Company Email</label>
+        <div class="field-input-wrap">
+          <i class="fa-solid fa-envelope icon"></i>
+          <input type="email" id="email" placeholder="admin@yourcompany.com"/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <div class="field-input-wrap">
+          <i class="fa-solid fa-key icon"></i>
+          <input type="password" id="password" placeholder="Your password"/>
+          <span class="toggle-pass" onclick="togglePass()">
+            <i class="fa-solid fa-eye" id="eye-icon"></i>
+          </span>
+        </div>
+      </div>
+
+      <button class="btn-submit" onclick="handleLogin()">
+        <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        Sign In to Dashboard
+      </button>
+
+      <div id="auth-message" class="auth-message"></div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="auth-right">
+      <div class="auth-right-inner">
+        <h2 class="auth-right-title">
+          One login.<br/>
+          <span>Your entire workforce.</span>
+        </h2>
+        <p class="auth-right-sub">
+          Sign in to access your private company dashboard.
+          All your employee data, secured and isolated.
+        </p>
+        <div class="auth-info-cards">
+          <div class="auth-info-card">
+            <i class="fa-solid fa-database"></i>
+            <span><strong>Private database</strong> — your data is never mixed with others</span>
+          </div>
+          <div class="auth-info-card">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            <span><strong>Session stays active</strong> — no repeated logins for 7 days</span>
+          </div>
+          <div class="auth-info-card">
+            <i class="fa-solid fa-users"></i>
+            <span><strong>Full control</strong> — add, edit, delete your team anytime</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function togglePass() {
+      const input = document.getElementById('password');
+      const icon = document.getElementById('eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.className = 'fa-solid fa-eye-slash';
+      } else {
+        input.type = 'password';
+        icon.className = 'fa-solid fa-eye';
+      }
+    }
+
+    function showMsg(type, text) {
+      const el = document.getElementById('auth-message');
+      el.className = `auth-message ${type}`;
+      el.textContent = text;
+    }
+
+    async function handleLogin() {
+      const email    = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        showMsg('error', '⚠ Email and password are required.'); return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const json = await res.json();
+
+        if (json.success) {
+          localStorage.setItem('ems_token', json.token);
+          localStorage.setItem('ems_company', JSON.stringify(json.company));
+          showMsg('success', `✓ Welcome back! Redirecting...`);
+          setTimeout(() => { window.location.href = 'home.html'; }, 1200);
+        } else {
+          showMsg('error', `✗ ${json.message}`);
+        }
+      } catch (err) {
+        showMsg('error', '✗ Cannot connect to server. Is backend running?');
+      }
+    }
+
+    // If already logged in, redirect
+    if (localStorage.getItem('ems_token')) {
+      window.location.href = 'home.html';
+    }
+  </script>
+
+</body>
+</html>

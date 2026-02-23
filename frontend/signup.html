@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EMS — Create Account</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:      #030305;
+      --card:       #0d0d18;
+      --hover:      #14141f;
+      --gold:       #c8a951;
+      --gold2:      #e2c06a;
+      --goldDim:    rgba(200,169,81,0.10);
+      --goldBorder: rgba(200,169,81,0.18);
+      --goldGlow:   rgba(200,169,81,0.25);
+      --border:     rgba(255,255,255,0.06);
+      --text:       #e4e4f0;
+      --muted:      #5a5a72;
+      --textSub:    #a0a0b8;
+      --danger:     #f0506e;
+      --success:    #2dd4a0;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--black);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,169,81,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,169,81,0.025) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(200,169,81,0.07), transparent 70%);
+      top: -150px; left: -150px;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0,212,255,0.04), transparent 70%);
+      bottom: -100px; right: -100px;
+    }
+
+    .auth-layout {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* LEFT PANEL */
+    .auth-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 80px;
+      border-right: 1px solid var(--goldBorder);
+      background: rgba(7,7,15,0.6);
+    }
+
+    .auth-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 60px;
+      text-decoration: none;
+    }
+
+    .auth-brand-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--goldDim);
+      border: 1px solid var(--goldBorder);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 1rem;
+    }
+
+    .auth-brand-text {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+
+    .auth-left-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+
+    .auth-left-title span {
+      background: linear-gradient(135deg, var(--gold), var(--gold2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .auth-left-sub {
+      font-size: 1rem;
+      color: var(--textSub);
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 400px;
+      margin-bottom: 48px;
+    }
+
+    .auth-features { display: flex; flex-direction: column; gap: 16px; }
+
+    .auth-feature { display: flex; align-items: center; gap: 14px; }
+
+    .auth-feature-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--goldDim);
+      border: 1px solid var(--goldBorder);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold);
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+
+    .auth-feature-text { font-size: 0.875rem; color: var(--textSub); }
+    .auth-feature-text strong { color: var(--text); font-weight: 500; }
+
+    /* RIGHT PANEL */
+    .auth-right {
+      width: 520px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 56px;
+      background: rgba(13,13,24,0.8);
+    }
+
+    .form-heading { margin-bottom: 28px; }
+
+    .form-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--gold);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .form-heading h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+    }
+
+    .form-heading p { font-size: 0.855rem; color: var(--muted); margin-top: 6px; }
+    .form-heading p a { color: var(--gold); text-decoration: none; font-weight: 500; }
+    .form-heading p a:hover { text-decoration: underline; }
+
+    /* FIELDS */
+    .field { margin-bottom: 16px; }
+
+    .field label {
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 7px;
+    }
+
+    .field-input-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    /* LEFT ICON */
+    .field-icon-left {
+      position: absolute;
+      left: 13px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      pointer-events: none;
+      transition: color 0.2s;
+      z-index: 2;
+    }
+
+    .field-input-wrap:focus-within .field-icon-left {
+      color: var(--gold);
+    }
+
+    /* INPUT */
+    .field input {
+      width: 100%;
+      background: var(--hover);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 11px 42px 11px 38px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    .field input:focus {
+      border-color: var(--goldBorder);
+      background: #11111e;
+      box-shadow: 0 0 0 3px rgba(200,169,81,0.06);
+    }
+
+    .field input::placeholder { color: var(--muted); }
+
+    /* RIGHT TOGGLE ICON */
+    .field-icon-right {
+      position: absolute;
+      right: 13px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: color 0.2s;
+      z-index: 2;
+      padding: 4px;
+    }
+
+    .field-icon-right:hover { color: var(--gold); }
+
+    /* SUBMIT */
+    .btn-submit {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, #a07830, var(--gold), var(--gold2));
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.4s;
+    }
+
+    .btn-submit:hover::before { left: 100%; }
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px var(--goldGlow);
+    }
+
+    /* MESSAGE */
+    .auth-message {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3px;
+      display: none;
+    }
+
+    .auth-message.error {
+      display: block;
+      background: rgba(240,80,110,0.08);
+      color: var(--danger);
+      border: 1px solid rgba(240,80,110,0.2);
+    }
+
+    .auth-message.success {
+      display: block;
+      background: rgba(45,212,160,0.08);
+      color: var(--success);
+      border: 1px solid rgba(45,212,160,0.2);
+    }
+
+    .auth-footer-note {
+      text-align: center;
+      margin-top: 20px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem;
+      color: var(--muted);
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="auth-layout">
+
+    <!-- LEFT -->
+    <div class="auth-left">
+      <a href="home.html" class="auth-brand">
+        <div class="auth-brand-icon"><i class="fa-solid fa-building-columns"></i></div>
+        <span class="auth-brand-text">EMS PORTAL</span>
+      </a>
+
+      <h2 class="auth-left-title">
+        Your company.<br/>
+        Your <span>employees.</span><br/>
+        Your data.
+      </h2>
+
+      <p class="auth-left-sub">
+        Create your company account and get a private, isolated workspace.
+        No other company can see your data — ever.
+      </p>
+
+      <div class="auth-features">
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-lock"></i></div>
+          <div class="auth-feature-text"><strong>Isolated data</strong> — each company sees only their own employees</div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div class="auth-feature-text"><strong>Encrypted passwords</strong> — secured with bcrypt hashing</div>
+        </div>
+        <div class="auth-feature">
+          <div class="auth-feature-icon"><i class="fa-solid fa-bolt"></i></div>
+          <div class="auth-feature-text"><strong>JWT sessions</strong> — fast, stateless authentication</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="auth-right">
+      <div class="form-heading">
+        <div class="form-eyebrow">Get Started</div>
+        <h1>Create Account</h1>
+        <p>Already registered? <a href="login.html">Sign in here →</a></p>
+      </div>
+
+      <!-- Company Name -->
+      <div class="field">
+        <label>Company Name</label>
+        <div class="field-input-wrap">
+          <i class="fa-solid fa-building field-icon-left"></i>
+          <input type="text" id="companyName" placeholder="e.g. Tech Corp India"/>
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label>Company Email</label>
+        <div class="field-input-wrap">
+          <i class="fa-solid fa-envelope field-icon-left"></i>
+          <input type="email" id="email" placeholder="admin@yourcompany.com"/>
+        </div>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label>Password</label>
+        <div class="field-input-wrap">
+          <i class="fa-solid fa-key field-icon-left"></i>
+          <input type="password" id="password" placeholder="Min. 6 characters"/>
+          <i class="fa-solid fa-eye field-icon-right" onclick="togglePass('password', this)"></i>
+        </div>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="field">
+        <label>Confirm Password</label>
+        <div class="field-input-wrap">
+          <i class="fa-solid fa-key field-icon-left"></i>
+          <input type="password" id="confirmPassword" placeholder="Repeat your password"/>
+          <i class="fa-solid fa-eye field-icon-right" onclick="togglePass('confirmPassword', this)"></i>
+        </div>
+      </div>
+
+      <button class="btn-submit" onclick="handleSignup()">
+        <i class="fa-solid fa-rocket"></i>
+        Create My Account
+      </button>
+
+      <div id="auth-message" class="auth-message"></div>
+
+      <div class="auth-footer-note">
+        BY SIGNING UP YOU AGREE TO OUR TERMS OF SERVICE
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function togglePass(id, el) {
+      const input = document.getElementById(id);
+      if (input.type === 'password') {
+        input.type = 'text';
+        el.className = 'fa-solid fa-eye-slash field-icon-right';
+      } else {
+        input.type = 'password';
+        el.className = 'fa-solid fa-eye field-icon-right';
+      }
+    }
+
+    function showMsg(type, text) {
+      const el = document.getElementById('auth-message');
+      el.className = `auth-message ${type}`;
+      el.textContent = text;
+    }
+
+    async function handleSignup() {
+      const companyName     = document.getElementById('companyName').value.trim();
+      const email           = document.getElementById('email').value.trim();
+      const password        = document.getElementById('password').value;
+      const confirmPassword = document.getElementById('confirmPassword').value;
+
+      if (!companyName || !email || !password || !confirmPassword) {
+        showMsg('error', '⚠ All fields are required.'); return;
+      }
+      if (password.length < 6) {
+        showMsg('error', '⚠ Password must be at least 6 characters.'); return;
+      }
+      if (password !== confirmPassword) {
+        showMsg('error', '⚠ Passwords do not match.'); return;
+      }
+
+      try {
+        const res = await fetch('http://localhost:5000/api/auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ companyName, email, password }),
+        });
+
+        const json = await res.json();
+
+        if (json.success) {
+          localStorage.setItem('ems_token', json.token);
+          localStorage.setItem('ems_company', JSON.stringify(json.company));
+          showMsg('success', `✓ Account created! Redirecting...`);
+          setTimeout(() => { window.location.href = 'home.html'; }, 1200);
+        } else {
+          showMsg('error', `✗ ${json.message}`);
+        }
+      } catch (err) {
+        showMsg('error', '✗ Cannot connect to server. Is backend running?');
+      }
+    }
+  </script>
+
+</body>
+</html>
