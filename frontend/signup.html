@@ -471,7 +471,11 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch('https://employee-management-system-p2iq.onrender.com/api/auth/signup', {
+        const BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+          ? 'http://localhost:5000'
+          : 'https://employee-management-system-p2iq.onrender.com';
+
+        const res = await fetch(`${BASE}/api/auth/signup`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ companyName, email, password }),

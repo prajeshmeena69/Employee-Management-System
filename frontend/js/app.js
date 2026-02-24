@@ -1,4 +1,6 @@
-const API = 'https://employee-management-system-p2iq.onrender.com/api/employees';
+const API = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000/api/employees'
+  : 'https://employee-management-system-p2iq.onrender.com/api/employees';
 
 // ─── AUTH GUARD ───────────────────────────────────────────
 function getToken() {
