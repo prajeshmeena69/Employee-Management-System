@@ -455,6 +455,7 @@
       const email           = document.getElementById('email').value.trim();
       const password        = document.getElementById('password').value;
       const confirmPassword = document.getElementById('confirmPassword').value;
+      const btn             = document.querySelector('.btn-submit');
 
       if (!companyName || !email || !password || !confirmPassword) {
         showMsg('error', '⚠ All fields are required.'); return;
@@ -465,6 +466,9 @@
       if (password !== confirmPassword) {
         showMsg('error', '⚠ Passwords do not match.'); return;
       }
+
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Account...';
+      btn.disabled = true;
 
       try {
         const res = await fetch('https://employee-management-system-p2iq.onrender.com/api/auth/signup', {
@@ -479,12 +483,17 @@
           localStorage.setItem('ems_token', json.token);
           localStorage.setItem('ems_company', JSON.stringify(json.company));
           showMsg('success', `✓ Account created! Redirecting...`);
+          btn.innerHTML = '<i class="fa-solid fa-check"></i> Success!';
           setTimeout(() => { window.location.href = 'home.html'; }, 1200);
         } else {
           showMsg('error', `✗ ${json.message}`);
+          btn.innerHTML = '<i class="fa-solid fa-rocket"></i> Create My Account';
+          btn.disabled = false;
         }
       } catch (err) {
-        showMsg('error', '✗ Cannot connect to server. Is backend running?');
+        showMsg('error', '✗ Server is waking up. Please wait 30 seconds and try again.');
+        btn.innerHTML = '<i class="fa-solid fa-rocket"></i> Create My Account';
+        btn.disabled = false;
       }
     }
   </script>
