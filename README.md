@@ -213,11 +213,16 @@ Authorization: Bearer <token>
 
 ## 👨‍💻 Developed By
 
-**Prajesh Singh Meena**
-KIET Academic Projects — 4th Semester
+**Prajesh Singh Meena**  
+KIET Academic Projects — 4th Semester  
 AI Driven Full Stack Development
 
----
+## 👤 Contact
+
+**Prajesh Singh Meena**
+
+- GitHub: https://github.com/prajeshmeena69
+- LinkedIn: https://www.linkedin.com/in/prajesh-singh-meena-607437327
 
 ## 📝 License
 
