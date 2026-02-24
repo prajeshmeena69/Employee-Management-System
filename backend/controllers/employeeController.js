@@ -3,10 +3,30 @@ const Employee = require('../models/employeeModel');
 // POST /api/employees
 const addEmployee = async (req, res, next) => {
   try {
+    // Get all existing employee IDs for this company
+    const existingEmployees = await Employee.find({ companyId: req.company._id })
+      .select('employeeId')
+      .sort({ employeeId: 1 });
+
+    // Find the first available slot starting from 1
+    let newNumber = 1;
+    for (const emp of existingEmployees) {
+      const num = parseInt(emp.employeeId.replace('EMP', ''));
+      if (num === newNumber) {
+        newNumber++;
+      } else {
+        break;
+      }
+    }
+
+    const employeeId = `EMP${String(newNumber).padStart(4, '0')}`;
+
     const employee = await Employee.create({
       ...req.body,
+      employeeId,
       companyId: req.company._id,
     });
+
     res.status(201).json({ success: true, data: employee });
   } catch (error) {
     next(error);
