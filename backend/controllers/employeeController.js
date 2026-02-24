@@ -16,8 +16,7 @@ const addEmployee = async (req, res, next) => {
 // GET /api/employees
 const getAllEmployees = async (req, res, next) => {
   try {
-    const employees = await Employee.find({ companyId: req.company._id })
-      .sort({ createdAt: -1 });
+    const employees = await Employee.find({ companyId: req.company._id }).sort({ createdAt: 1 });
     res.status(200).json({ success: true, count: employees.length, data: employees });
   } catch (error) {
     next(error);
